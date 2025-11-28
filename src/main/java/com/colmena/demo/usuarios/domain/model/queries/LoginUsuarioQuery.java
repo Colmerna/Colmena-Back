@@ -1,4 +1,3 @@
 package com.colmena.demo.usuarios.domain.model.queries;
 
-public class LoginUsuarioQuery {
-}
+public record LoginUsuarioQuery(String username, String password) {}

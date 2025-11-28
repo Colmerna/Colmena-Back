@@ -1,4 +1,6 @@
 package com.colmena.demo.usuarios.infrastructure.rest.resources;
 
-public class LoginResource {
-}
+public record LoginResource(
+        String username,
+        String password
+) {}

@@ -1,4 +1,16 @@
 package com.colmena.demo.bancos.domain.repository;
 
-public class BancoRepository {
+import com.colmena.demo.bancos.domain.model.aggregates.Banco;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface BancoRepository {
+
+
+    Banco save(Banco banco);              // 👈 AGREGA ESTO
+
+    Optional<Banco> findById(Long id);
+
+    List<Banco> findAll();
 }

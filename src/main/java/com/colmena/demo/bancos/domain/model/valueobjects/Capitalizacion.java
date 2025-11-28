@@ -1,4 +1,4 @@
-package com.colmena.demo.banco.domain.model.valueobjects;
+package com.colmena.demo.bancos.domain.model.valueobjects;
 
 public enum Capitalizacion {
     DIARIA,

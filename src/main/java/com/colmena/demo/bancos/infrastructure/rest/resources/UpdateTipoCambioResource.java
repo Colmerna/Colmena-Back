@@ -1,4 +1,8 @@
 package com.colmena.demo.bancos.infrastructure.rest.resources;
 
-public class UpdateTipoCambioResource {
-}
+import java.math.BigDecimal;
+
+public record UpdateTipoCambioResource(
+        BigDecimal tipoCambioCompra,
+        BigDecimal tipoCambioVenta
+) {}

@@ -1,4 +1,3 @@
 package com.colmena.demo.usuarios.domain.model.queries;
 
-public class GetUsuarioByIdQuery {
-}
+public record GetUsuarioByIdQuery(Long usuarioId) {}

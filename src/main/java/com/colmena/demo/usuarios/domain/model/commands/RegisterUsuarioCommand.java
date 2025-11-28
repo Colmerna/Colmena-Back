@@ -1,4 +1,7 @@
 package com.colmena.demo.usuarios.domain.model.commands;
 
-public class RegisterUsuarioCommand {
-}
+public record RegisterUsuarioCommand(
+        String username,
+        String email,
+        String password
+) {}

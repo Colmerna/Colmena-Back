@@ -1,4 +1,7 @@
 package com.colmena.demo.usuarios.infrastructure.rest.resources;
 
-public class UsuarioResource {
-}
+public record UsuarioResource(
+        Long id,
+        String username,
+        String email
+) {}

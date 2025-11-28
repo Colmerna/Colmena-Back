@@ -1,4 +1,3 @@
 package com.colmena.demo.proyectos.domain.model.queries;
 
-public class GetProyectoByIdQuery {
-}
+public record GetProyectoByIdQuery(Long proyectoId) {}

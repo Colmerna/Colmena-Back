@@ -1,4 +1,4 @@
-package com.colmena.demo.usuarios.application.queryservice;
+package com.colmena.demo.usuarios.application.queryservices;
 
 import com.colmena.demo.usuarios.domain.model.aggregates.Usuario;
 import com.colmena.demo.usuarios.domain.model.queries.GetUsuarioByIdQuery;

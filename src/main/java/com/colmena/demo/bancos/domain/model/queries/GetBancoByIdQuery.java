@@ -1,4 +1,3 @@
 package com.colmena.demo.bancos.domain.model.queries;
 
-public class GetBancoByIdQuery {
-}
+public record GetBancoByIdQuery(Long bancoId) {}

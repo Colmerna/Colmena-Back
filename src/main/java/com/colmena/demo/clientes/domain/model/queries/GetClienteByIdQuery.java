@@ -1,4 +1,3 @@
 package com.colmena.demo.clientes.domain.model.queries;
 
-public class GetClienteByIdQuery {
-}
+public record GetClienteByIdQuery(Long clienteId) {}
