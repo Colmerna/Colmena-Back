@@ -38,7 +38,7 @@ public class Cliente extends AuditableAbstractAggregateRoot<Cliente> {
     @Column(nullable = false)
     private Integer dependientes;
 
-    @Column(name = "score_riesgo", precision = 5, scale = 2)
+    @Column(name = "score_riesgo", precision = 10, scale = 2)
     private BigDecimal scoreRiesgo;
 
     @Column(name = "gasto_mensual_aprox", precision = 12, scale = 2)

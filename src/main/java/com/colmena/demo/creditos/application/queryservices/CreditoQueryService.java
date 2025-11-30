@@ -12,4 +12,5 @@ public interface CreditoQueryService {
     List<Credito> obtenerPorCliente(Long clienteId);
     List<Cuota> obtenerCuotas(Long creditoId);
     Resultado obtenerResultado(Long creditoId);
+    List<Credito> obtenerTodos();
 }

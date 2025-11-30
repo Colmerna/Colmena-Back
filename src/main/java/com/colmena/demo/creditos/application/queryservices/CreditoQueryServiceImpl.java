@@ -46,4 +46,9 @@ public class CreditoQueryServiceImpl implements CreditoQueryService {
         return resultadoRepository.findByCreditoId(creditoId)
                 .orElseThrow(() -> new IllegalArgumentException("Resultado no encontrado"));
     }
+
+    @Override
+    public List<Credito> obtenerTodos() {
+        return creditoRepository.findAll();
+    }
 }

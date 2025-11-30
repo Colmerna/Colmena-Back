@@ -97,4 +97,17 @@ public class CreditoController {
                 .map(CreditoResourceAssembler::toResource)
                 .toList();
     }
+
+    // ---------------------------------------------------------
+    // 7) Obtener todos los creditos (para dashboard)
+    // ---------------------------------------------------------
+    @GetMapping
+    public List<CreditoResource> obtenerTodos() {
+
+        List<Credito> creditos = queryService.obtenerTodos();
+
+        return creditos.stream()
+                .map(CreditoResourceAssembler::toResource)
+                .toList();
+    }
 }
