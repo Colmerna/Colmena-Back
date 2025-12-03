@@ -34,7 +34,7 @@ public record CreateCreditoResource(
         Integer plazoMeses,
         BigDecimal montoPrestamo,
 
-        // --- Costos iniciales (Excel) ---
+        // --- Costos iniciales ---
         BigDecimal costosNotariales,
         BigDecimal costosRegistrales,
         BigDecimal tasacion,
@@ -48,7 +48,7 @@ public record CreateCreditoResource(
         BigDecimal porcentajeSeguroDesgravamen,
         BigDecimal porcentajeSeguroRiesgo,
 
-        // --- Tasa de descuento (para VAN) ---
+        // --- Tasa de descuento ---
         BigDecimal tasaDescuentoAnual,
 
         // --- Frecuencia / días por año ---

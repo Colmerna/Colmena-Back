@@ -30,9 +30,7 @@ public class CreditoController {
         this.queryService = queryService;
     }
 
-    // ---------------------------------------------------------
-    // 1) Crear crédito (solo registra, no simula aún)
-    // ---------------------------------------------------------
+
     @PostMapping
     public CreditoResource crearCredito(@RequestBody CreateCreditoResource resource) {
 
@@ -42,9 +40,7 @@ public class CreditoController {
         return CreditoResourceAssembler.toResource(saved);
     }
 
-    // ---------------------------------------------------------
-    // 2) Simular crédito (genera cuotas + resultado)
-    // ---------------------------------------------------------
+
     @PostMapping("/{id}/simular")
     public ResultadoResource simularCredito(@PathVariable Long id) {
 
@@ -52,9 +48,7 @@ public class CreditoController {
         return ResultadoResourceAssembler.toResource(resultado);
     }
 
-    // ---------------------------------------------------------
-    // 3) Obtener crédito por id
-    // ---------------------------------------------------------
+
     @GetMapping("/{id}")
     public CreditoResource obtenerPorId(@PathVariable Long id) {
 
@@ -62,9 +56,7 @@ public class CreditoController {
         return CreditoResourceAssembler.toResource(credito);
     }
 
-    // ---------------------------------------------------------
-    // 4) Obtener cuotas de un crédito
-    // ---------------------------------------------------------
+
     @GetMapping("/{id}/cuotas")
     public List<CuotaResource> obtenerCuotas(@PathVariable Long id) {
 
@@ -75,9 +67,7 @@ public class CreditoController {
                 .toList();
     }
 
-    // ---------------------------------------------------------
-    // 5) Obtener resultado de un crédito (TCEA, VAN, TIR, etc.)
-    // ---------------------------------------------------------
+
     @GetMapping("/{id}/resultado")
     public ResultadoResource obtenerResultado(@PathVariable Long id) {
 
@@ -85,9 +75,7 @@ public class CreditoController {
         return ResultadoResourceAssembler.toResource(resultado);
     }
 
-    // ---------------------------------------------------------
-    // 6) Obtener todos los créditos de un cliente
-    // ---------------------------------------------------------
+
     @GetMapping("/cliente/{clienteId}")
     public List<CreditoResource> obtenerPorCliente(@PathVariable Long clienteId) {
 
@@ -98,9 +86,6 @@ public class CreditoController {
                 .toList();
     }
 
-    // ---------------------------------------------------------
-    // 7) Obtener todos los creditos (para dashboard)
-    // ---------------------------------------------------------
     @GetMapping
     public List<CreditoResource> obtenerTodos() {
 

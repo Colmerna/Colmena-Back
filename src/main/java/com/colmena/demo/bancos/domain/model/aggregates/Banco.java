@@ -38,7 +38,7 @@ public class Banco extends AuditableAbstractAggregateRoot<Banco> {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "capitalizacion_default", nullable = false)
-    private Capitalizacion capitalizacionDefault; // ej. MENSUAL
+    private Capitalizacion capitalizacionDefault;
 
     @Column(name = "tipo_cambio_compra", precision = 10, scale = 4)
     private BigDecimal tipoCambioCompra;

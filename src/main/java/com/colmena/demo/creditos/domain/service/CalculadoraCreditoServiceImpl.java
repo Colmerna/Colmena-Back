@@ -26,15 +26,13 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
         this.clienteRepository = clienteRepository;
     }
 
-    // ===========================================================
-    // 1. GENERAR PLAN DE CUOTAS COMPLETO
-    // ===========================================================
+
     @Override
     public List<Cuota> generarPlanCuotas(Credito credito) {
 
         List<Cuota> cuotas = new ArrayList<>();
 
-        // === Monto del préstamo según MiVivienda / Bono Techo ===
+        //Monto del préstamo según MiVivienda / Bono Techo
         BigDecimal montoPrestamo = calcularMontoPrestamoConBono(credito);
 
         BigDecimal saldo = montoPrestamo;
@@ -42,7 +40,7 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
         // TEM = tasa por período según base 30/360 y frecuenciaPagoDias
         BigDecimal tem = calcularTEM(credito);
 
-        int numeroPeriodos = credito.getPlazoMeses(); // N° de cuotas
+        int numeroPeriodos = credito.getPlazoMeses();
 
         BigDecimal cuotaBase = calcularCuotaFrancesa(saldo, tem, numeroPeriodos);
 
@@ -58,11 +56,11 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
         BigDecimal frecBD = BigDecimal.valueOf(frecDias);
         BigDecimal diasAnioBD = BigDecimal.valueOf(diasAnio);
 
-        // N° cuotas por año = diasAnio / frec
+
         BigDecimal cuotasAnio = diasAnioBD
                 .divide(frecBD, 10, RoundingMode.HALF_UP);
 
-        // tasa del seguro de desgravamen por periodo: pSegDes/30 * frecDias
+        // tasa del seguro de desgravamen por periodo
         BigDecimal tasaSegDesPeriodo = credito.getPorcentajeSeguroDesgravamen()
                 .multiply(frecBD)
                 .divide(new BigDecimal("30"), 10, RoundingMode.HALF_UP);
@@ -75,9 +73,7 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
             BigDecimal amortizacion;
             BigDecimal saldoFinal;
 
-            // ==============================
-            // GRACIA
-            // ==============================
+
             if (credito.getGraciaTipo() == GraciaTipo.GRACIA_TOTAL && n <= mesesGracia) {
                 interes = BigDecimal.ZERO;
                 amortizacion = BigDecimal.ZERO;
@@ -94,15 +90,15 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
                 saldoFinal = saldo.subtract(amortizacion);
             }
 
-            // ==============================
-            // SEGUROS Y GASTOS (modo Excel)
-            // ==============================
-            // Seguro desgravamen: pSegDes/30 * frecDias * saldo
+
+            // SEGUROS Y GASTOS
+
+            // Seguro desgravamen
             BigDecimal segDes = saldo
                     .multiply(tasaSegDesPeriodo)
                     .setScale(6, RoundingMode.HALF_UP);
 
-            // Seguro riesgo fijo por período: pSegRie * PV / NCuotasAño
+            // Seguro riesgo fijo por período
             BigDecimal segRie = credito.getPrecioVentaActivo()
                     .multiply(credito.getPorcentajeSeguroRiesgo())
                     .divide(cuotasAnio, 6, RoundingMode.HALF_UP);
@@ -111,9 +107,9 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
             BigDecimal portes = credito.getPortes();
             BigDecimal gastosAdm = credito.getGastosAdmPeriodicos();
 
-            // ==============================
+
             // CUOTA TOTAL
-            // ==============================
+
             BigDecimal cuotaTotal =
                     interes.add(amortizacion)
                             .add(segDes)
@@ -122,12 +118,11 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
                             .add(portes)
                             .add(gastosAdm);
 
-            // Fecha de vencimiento según frecuencia en días (30/360)
+            // Fecha de vencimiento según frecuencia en días
             LocalDate fechaVencimiento = fechaDesembolso.plusDays((long) frecDias * n);
 
-            // ==============================
-            // CREAR CUOTA
-            // ==============================
+
+
             Cuota c = new Cuota(
                     credito,
                     n,
@@ -156,9 +151,7 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
     }
 
 
-    // ===========================================================
-    // 2. RESULTADOS GLOBALES
-    // ===========================================================
+
     @Override
     public Resultado calcularResultados(Credito credito, List<Cuota> cuotas) {
 
@@ -207,9 +200,8 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
                 .multiply(new BigDecimal(credito.getPlazoMeses()))
                 .setScale(2, RoundingMode.HALF_UP);
 
-        // ==============================
-        // SALDO A FINANCIAR Y COSTOS INICIALES (modo Excel + Bono Techo)
-        // ==============================
+        // SALDO A FINANCIAR Y COSTOS INICIALES
+
         BigDecimal saldoAFinanciar = calcularSaldoAFinanciarConBono(credito);
         BigDecimal costosIniciales = calcularCostosIniciales(credito);
         BigDecimal netoInicial = saldoAFinanciar.subtract(costosIniciales);
@@ -227,14 +219,14 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
                     .multiply(new BigDecimal("100"));
         }
 
-        // FLUJOS (visión cliente simple): salida inicial + pagos
+
         BigDecimal flujoTotal = netoInicial.negate().add(totalPagado);
         BigDecimal saldoFinalFlujo = flujoTotal;
 
-        // VAN desde el punto de vista del banco (flujo0 = montoPrestamo, flujos = -cuotas)
+
         BigDecimal van = calcularVAN(credito, cuotas, credito.getTasaDescuentoAnual());
 
-        // ASIGNAR TODOS LOS VALORES A RESULTADO
+
         r.setTea(tea);
         r.setTcea(tcea);
         r.setTir(tir);
@@ -259,9 +251,9 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
     }
 
 
-    // ===========================================================
-    // 3. FORMULAS FINANCIERAS
-    // ===========================================================
+
+    // FORMULAS FINANCIERAS
+
     private BigDecimal calcularTEA(Credito credito) {
 
         if (credito.getTipoTasa() == TipoTasaInteres.NOMINAL) {
@@ -277,9 +269,7 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
         return credito.getTasaEfectiva();
     }
 
-    /**
-     * TEM/Tasa por período según base 30/360 y frecuenciaPagoDias.
-     */
+
     private BigDecimal calcularTEM(Credito credito) {
 
         BigDecimal tea = calcularTEA(credito);  // TEA anual
@@ -306,9 +296,7 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
     }
 
 
-    // ===========================================================
-    // 4. VAN / TIR / TCEA
-    // ===========================================================
+
     private BigDecimal calcularVAN(Credito credito, List<Cuota> cuotas, BigDecimal tasaDescuentoAnual) {
 
         if (tasaDescuentoAnual == null)
@@ -316,11 +304,11 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
 
         BigDecimal tem = convertirEfectivaAPeriodo(credito, tasaDescuentoAnual);
 
-        // Flujo 0 igual que Excel: Monto del préstamo calculado (positivo)
+
         BigDecimal montoPrestamo = calcularMontoPrestamoConBono(credito);
         BigDecimal van = montoPrestamo;
 
-        // Flujos de cada período: -CuotaTotal / (1+tem)^n
+
         for (Cuota c : cuotas) {
             BigDecimal descuento = BigDecimal.ONE.add(tem).pow(c.getPeriodo());
             BigDecimal vp = c.getCuotaTotal()
@@ -345,44 +333,41 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
 
     private BigDecimal calcularTIR(Credito credito, List<Cuota> cuotas) {
 
-        // Flujo 0 igual que Excel: monto del préstamo calculado (positivo)
+
         double flujo0 = calcularMontoPrestamoConBono(credito).doubleValue();
 
         double lower = 0.0;
-        double upper = 0.5;   // 50% por período máximo
+        double upper = 0.5;
         double tir = 0;
 
         for (int i = 0; i < 80; i++) {
 
             tir = (lower + upper) / 2.0;
 
-            // NPV con CF0 positivo y cuotas negativas
+
             double npv = flujo0;
 
             for (Cuota c : cuotas) {
-                double cf = -c.getCuotaTotal().doubleValue();  // flujo de salida
+                double cf = -c.getCuotaTotal().doubleValue();
                 npv += cf / Math.pow(1 + tir, c.getPeriodo());
             }
 
             if (Math.abs(npv) < 1e-6) {
-                break; // suficientemente cerca de 0
+                break;
             }
 
-            // OJO: función NPV crece con la tasa en este set de flujos
+
             if (npv > 0) {
-                upper = tir;   // estamos por encima de la raíz
+                upper = tir;
             } else {
-                lower = tir;   // estamos por debajo de la raíz
+                lower = tir;
             }
         }
 
         return BigDecimal.valueOf(tir).setScale(8, RoundingMode.HALF_UP);
     }
 
-    /**
-     * TCEA anual a partir de TIR por período,
-     * usando número de períodos por año según 30/360.
-     */
+
     private BigDecimal calcularTCEA(Credito credito, BigDecimal tirPorPeriodo) {
         if (tirPorPeriodo == null) return BigDecimal.ZERO;
 
@@ -395,15 +380,13 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
         return new BigDecimal(t).setScale(8, RoundingMode.HALF_UP);
     }
 
-    // ===========================================================
-    // 5. HELPERS BONO TECHO / COSTOS INICIALES
-    // ===========================================================
-    /** Bono Techo seguro, nunca null */
+
+
     private BigDecimal obtenerBono(Credito credito) {
         return credito.getBonoTecho() != null ? credito.getBonoTecho() : BigDecimal.ZERO;
     }
 
-    /** Suma de todos los costos/gastos iniciales financiados */
+
     private BigDecimal calcularCostosIniciales(Credito credito) {
         BigDecimal ci = BigDecimal.ZERO;
         if (credito.getCostosNotariales() != null) ci = ci.add(credito.getCostosNotariales());
@@ -414,7 +397,7 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
         return ci;
     }
 
-    /** Saldo a financiar: PV - cuota inicial - bono techo (no negativo) */
+
     private BigDecimal calcularSaldoAFinanciarConBono(Credito credito) {
         BigDecimal bono = obtenerBono(credito);
         BigDecimal saldo = credito.getPrecioVentaActivo()
@@ -427,7 +410,7 @@ public class CalculadoraCreditoServiceImpl implements CalculadoraCreditoService 
         return saldo;
     }
 
-    /** Monto del préstamo total financiado: saldo a financiar + costos iniciales */
+
     private BigDecimal calcularMontoPrestamoConBono(Credito credito) {
         BigDecimal saldoAFinanciar = calcularSaldoAFinanciarConBono(credito);
         BigDecimal costosIniciales = calcularCostosIniciales(credito);

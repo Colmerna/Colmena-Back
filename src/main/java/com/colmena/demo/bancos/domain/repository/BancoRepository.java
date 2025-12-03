@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface BancoRepository {
 
 
-    Banco save(Banco banco);              // 👈 AGREGA ESTO
+    Banco save(Banco banco);
 
     Optional<Banco> findById(Long id);
 

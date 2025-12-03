@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Credito extends AuditableAbstractAggregateRoot<Credito> {
 
-    // ----------------- Relaciones básicas -----------------
+    // ----------------- Relaciones -----------------
 
     @Column(name = "idCliente", nullable = false)
     private Long clienteId;
@@ -57,7 +57,7 @@ public class Credito extends AuditableAbstractAggregateRoot<Credito> {
     @Column(name = "capitalizacion", nullable = false)
     private Capitalizacion capitalizacion;
 
-    // Precio de venta del activo (para reflejar el Excel)
+
     @Column(name = "precio_venta_activo", precision = 14, scale = 2)
     private BigDecimal precioVentaActivo;
 
@@ -83,7 +83,7 @@ public class Credito extends AuditableAbstractAggregateRoot<Credito> {
     @Column(name = "monto_prestamo", precision = 14, scale = 2, nullable = false)
     private BigDecimal montoPrestamo;
 
-    // ----------------- Costos / gastos iniciales (Excel) -----------------
+    // ----------------- Costos / gastos iniciales -----------------
 
     @Column(name = "costos_notariales", precision = 14, scale = 2)
     private BigDecimal costosNotariales;
@@ -100,7 +100,7 @@ public class Credito extends AuditableAbstractAggregateRoot<Credito> {
     @Column(name = "comision_activacion", precision = 14, scale = 2)
     private BigDecimal comisionActivacion;
 
-    // ----------------- Costos / gastos periódicos (config) -----------------
+    // ----------------- Costos / gastos periódicos -----------------
 
     @Column(name = "comision_periodica", precision = 14, scale = 2)
     private BigDecimal comisionPeriodica;
@@ -143,7 +143,7 @@ public class Credito extends AuditableAbstractAggregateRoot<Credito> {
     private LocalDateTime fechaAprobacion;
 
 
-    // ----------------- Constructor de dominio -----------------
+
 
     public Credito(Long clienteId,
                    Long proyectoId,
@@ -180,7 +180,7 @@ public class Credito extends AuditableAbstractAggregateRoot<Credito> {
                    Integer diasPorAnio,
                    EstadoCredito estadoCredito) {
 
-        // Validaciones básicas
+
         if (clienteId == null) throw new IllegalArgumentException("El cliente es obligatorio");
         if (proyectoId == null) throw new IllegalArgumentException("El proyecto es obligatorio");
         if (bancoId == null) throw new IllegalArgumentException("El banco es obligatorio");
@@ -245,7 +245,7 @@ public class Credito extends AuditableAbstractAggregateRoot<Credito> {
         this.fechaCreacion = LocalDateTime.now();
     }
 
-    // ----------------- Helpers para costos -----------------
+
 
     public BigDecimal getTotalCostosIniciales() {
         return zeroIfNull(costosNotariales)

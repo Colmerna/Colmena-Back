@@ -20,7 +20,7 @@ public class UsuarioCommandService {
             throw new IllegalArgumentException("Ya existe un usuario con ese username o email");
         }
 
-        // Aquí tú podrías hashear el password si quisieras.
+
         Usuario usuario = new Usuario(
                 command.username(),
                 command.email(),

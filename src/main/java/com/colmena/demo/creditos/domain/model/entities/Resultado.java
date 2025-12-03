@@ -24,16 +24,13 @@ public class Resultado {
     @JoinColumn(name = "idCredito", nullable = false)
     private Credito credito;
 
-    // ============================
-    // RESUMEN GENERAL
-    // ============================
 
     @Column(name = "resumen_credito", columnDefinition = "text")
     private String resumenCredito;
 
-    // ============================
+
     // INDICADORES FINANCIEROS
-    // ============================
+
 
     @Column(name = "tir", precision = 14, scale = 8)
     private BigDecimal tir;
@@ -47,9 +44,9 @@ public class Resultado {
     @Column(name = "van", precision = 14, scale = 2)
     private BigDecimal van;
 
-    // ============================
-    // COSTOS / TOTALES
-    // ============================
+
+    // COSTOS
+
 
     @Column(name = "cuota_base", precision = 14, scale = 2)
     private BigDecimal cuotaBase;
@@ -78,16 +75,13 @@ public class Resultado {
     @Column(name = "costo_total_final", precision = 14, scale = 2)
     private BigDecimal costoTotalFinal;
 
-    // ============================
-    // RELACIÓN INGRESOS
-    // ============================
+
+
 
     @Column(name = "porcentaje_ingreso", precision = 10, scale = 4)
     private BigDecimal porcentajeIngreso;
 
-    // ============================
-    // FLUJOS Y UTILIDAD
-    // ============================
+
 
     @Column(name = "flujo_total", precision = 14, scale = 2)
     private BigDecimal flujoTotal;
@@ -95,9 +89,7 @@ public class Resultado {
     @Column(name = "saldo_final_flujo", precision = 14, scale = 2)
     private BigDecimal saldoFinalFlujo;
 
-    // ============================
-    // Constructor útil
-    // ============================
+
 
     public Resultado(Credito credito) {
         this.credito = credito;

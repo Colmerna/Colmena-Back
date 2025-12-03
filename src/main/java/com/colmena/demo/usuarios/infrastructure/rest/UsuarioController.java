@@ -27,7 +27,7 @@ public class UsuarioController {
         this.queryService = queryService;
     }
 
-    // POST /usuarios -> registrar usuario
+    // POST /usuarios
     @PostMapping("/usuarios")
     public ResponseEntity<UsuarioResource> createUsuario(@RequestBody CreateUsuarioResource resource) {
 

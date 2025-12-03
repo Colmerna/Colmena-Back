@@ -30,7 +30,7 @@ public class ClienteController {
         this.queryService = queryService;
     }
 
-    // POST /api/clientes -> crear cliente
+    // POST /api/clientes
     @PostMapping
     public ResponseEntity<ClienteResource> createCliente(@RequestBody CreateClienteResource resource) {
 

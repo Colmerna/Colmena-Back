@@ -40,7 +40,7 @@ public class CreditoCommandServiceImpl implements CreditoCommandService {
         Credito credito = creditoRepository.findById(creditoId)
                 .orElseThrow(() -> new IllegalArgumentException("Crédito no encontrado"));
 
-        // 🚫 Validar si YA existe un resultado
+
         resultadoRepository.findByCreditoId(creditoId).ifPresent(r -> {
             throw new IllegalStateException("El crédito ya fue simulado anteriormente");
         });

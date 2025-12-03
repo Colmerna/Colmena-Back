@@ -11,9 +11,9 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Getter
-@Setter // para simplificar updates como en Cliente
+@Setter
 @Entity
-@Table(name = "proyecto") // coincide con tu tabla en Supabase
+@Table(name = "proyecto")
 @NoArgsConstructor
 public class Proyecto extends AuditableAbstractAggregateRoot<Proyecto> {
 

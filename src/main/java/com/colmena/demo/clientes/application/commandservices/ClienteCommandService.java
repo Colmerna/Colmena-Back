@@ -47,12 +47,7 @@ public class ClienteCommandService {
         Cliente cliente = clienteRepository.findById(command.clienteId())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
 
-        // Como no tenemos setters, podrías:
-        // - agregar métodos de actualización en el agregado
-        // o
-        // - por simplicidad en este proyecto, usar reflexión o cambiar el diseño.
-        // Para hacerlo simple, aquí cambio algunos campos con setters
-        // (si quieres, luego convertimos a métodos tipo cliente.actualizarDatos(...))
+
 
         if (command.telefono() != null) cliente.setTelefono(command.telefono());
         if (command.email() != null) cliente.setEmail(command.email());

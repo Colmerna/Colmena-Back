@@ -28,24 +28,19 @@ public class CreateCreditoCommandAssembler {
                 r.graciaMeses(),
                 r.plazoMeses(),
                 r.montoPrestamo(),
-                // costos iniciales
                 r.costosNotariales(),
                 r.costosRegistrales(),
                 r.tasacion(),
                 r.comisionEstudio(),
                 r.comisionActivacion(),
-                // costos periódicos
                 r.comisionPeriodica(),
                 r.portes(),
                 r.gastosAdmPeriodicos(),
                 r.porcentajeSeguroDesgravamen(),
                 r.porcentajeSeguroRiesgo(),
-                // tasa descuento
                 r.tasaDescuentoAnual(),
-                // frecuencia
                 r.frecuenciaPagoDias(),
                 r.diasPorAnio(),
-                // estado
                 EstadoCredito.PENDIENTE
         );
     }

@@ -72,7 +72,7 @@ public class Cuota {
     @Column(name = "tasa_efectiva_periodo", precision = 12, scale = 8)
     private BigDecimal tasaEfectivaPeriodo;
 
-    // ======== FLUJO DE CAJA (para TIR/VAN/TCEA) ========
+    // ======== FLUJO DE CAJA  ========
 
     @Column(name = "flujo_caja", precision = 14, scale = 2)
     private BigDecimal flujoCaja;
@@ -87,7 +87,7 @@ public class Cuota {
     @Column(name = "estado_cuotas", nullable = false)
     private EstadoCuota estadoCuotas;
 
-    // ======== CONSTRUCTOR COMPLETO ========
+
 
     public Cuota(Credito credito,
                  Integer periodo,

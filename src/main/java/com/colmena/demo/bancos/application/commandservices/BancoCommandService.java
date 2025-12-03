@@ -3,7 +3,6 @@ package com.colmena.demo.bancos.application.commandservices;
 import com.colmena.demo.bancos.domain.model.aggregates.Banco;
 import com.colmena.demo.bancos.domain.model.commands.CreateBancosCommand;
 import com.colmena.demo.bancos.domain.model.commands.UpdateTipoCambioBancoCommand;
-import com.colmena.demo.bancos.domain.model.queries.GetBancoByIdQuery;
 import com.colmena.demo.bancos.domain.repository.BancoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +32,7 @@ public class BancoCommandService {
                 command.estado()
         );
 
-        return bancoRepository.save(banco).getId();    // 👈 usamos bancoRepository
+        return bancoRepository.save(banco).getId();
     }
 
     @Transactional
@@ -44,7 +43,7 @@ public class BancoCommandService {
 
         banco.actualizarTipoCambio(command.tipoCambioCompra(), command.tipoCambioVenta());
 
-        bancoRepository.save(banco); // opcional si estás en contexto persistente, pero está bien
+        bancoRepository.save(banco);
     }
 
 }
