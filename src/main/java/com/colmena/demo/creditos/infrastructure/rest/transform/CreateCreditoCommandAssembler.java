@@ -1,3 +1,6 @@
+// ===========================================
+// CreateCreditoCommandAssembler
+// ===========================================
 package com.colmena.demo.creditos.infrastructure.rest.transform;
 
 import com.colmena.demo.creditos.domain.model.aggregates.Credito;
@@ -18,12 +21,31 @@ public class CreateCreditoCommandAssembler {
                 r.tasaEfectiva(),
                 r.baseTiempo(),
                 r.capitalizacion(),
+                r.precioVentaActivo(),
                 r.cuotaInicial(),
                 r.bonoTecho(),
                 r.graciaTipo(),
                 r.graciaMeses(),
                 r.plazoMeses(),
                 r.montoPrestamo(),
+                // costos iniciales
+                r.costosNotariales(),
+                r.costosRegistrales(),
+                r.tasacion(),
+                r.comisionEstudio(),
+                r.comisionActivacion(),
+                // costos periódicos
+                r.comisionPeriodica(),
+                r.portes(),
+                r.gastosAdmPeriodicos(),
+                r.porcentajeSeguroDesgravamen(),
+                r.porcentajeSeguroRiesgo(),
+                // tasa descuento
+                r.tasaDescuentoAnual(),
+                // frecuencia
+                r.frecuenciaPagoDias(),
+                r.diasPorAnio(),
+                // estado
                 EstadoCredito.PENDIENTE
         );
     }

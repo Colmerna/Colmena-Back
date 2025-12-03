@@ -8,14 +8,21 @@ public class CuotaResourceAssembler {
     public static CuotaResource toResource(Cuota c) {
         return new CuotaResource(
                 c.getPeriodo(),
-                c.getCuotaTotal(),      // antes getCuota()
+                c.getFechaPago(),
+                c.getSaldoInicial(),
                 c.getInteres(),
-                c.getAmortizacionCap(), // asegúrate que así se llama el getter
+                c.getAmortizacionCap(),
+                c.getCuotaTotal(),
+                c.getSaldoFinal(),
                 c.getSeguroDesgravamen(),
                 c.getSeguroInmueble(),
                 c.getComision(),
-                c.getGastosAdm(),       // antes getGastosAdministrativos()
-                c.getSaldoFinal()
+                c.getGastosAdm(),
+                c.getTasaEfectivaAnual(),
+                c.getTasaEfectivaPeriodo(),
+                c.getFlujoCaja(),
+                c.getTipoCuota(),
+                c.getEstadoCuotas()
         );
     }
 }

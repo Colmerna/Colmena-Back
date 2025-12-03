@@ -9,13 +9,20 @@ public class ResultadoResourceAssembler {
         return new ResultadoResource(
                 r.getCuotaBase(),
                 r.getTotalIntereses(),
+                r.getTotalAmortizacion(),
+                r.getTotalSeguroDesgravamen(),
+                r.getTotalSeguroRiesgo(),
+                r.getTotalComisiones(),
+                r.getTotalPortesGastos(),
                 r.getTotalPagado(),
-                r.getVanCliente(),
-                r.getTirCliente(),
+                r.getVan(),
+                r.getTir(),
                 r.getTea(),
                 r.getTcea(),
                 r.getCostoTotalFinal(),
-                r.getPorcentajeIngreso()
+                r.getPorcentajeIngreso(),
+                r.getFlujoTotal(),
+                r.getSaldoFinalFlujo()
         );
     }
 }

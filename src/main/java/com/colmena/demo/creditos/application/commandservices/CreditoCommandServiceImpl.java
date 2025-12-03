@@ -51,14 +51,6 @@ public class CreditoCommandServiceImpl implements CreditoCommandService {
         Resultado resultado = calculadora.calcularResultados(credito, cuotas);
 
 
-        // 3. DEBUG AQUÍ (ANTES DE GUARDAR)
-        System.out.println("====== DEBUG RESULTADO ======");
-        System.out.println("TEA  = " + resultado.getTea());
-        System.out.println("TCEA = " + resultado.getTcea());
-        System.out.println("TIR  = " + resultado.getTirCliente());
-        System.out.println("=============================");
-
-
 
         return resultadoRepository.save(resultado);
     }

@@ -33,6 +33,8 @@ public class Cuota {
     @Column(name = "fecha_pago", nullable = false)
     private LocalDate fechaPago;
 
+    // ======== DATOS PRINCIPALES ========
+
     @Column(name = "saldo_inicial", precision = 14, scale = 2, nullable = false)
     private BigDecimal saldoInicial;
 
@@ -48,6 +50,8 @@ public class Cuota {
     @Column(name = "saldo_final", precision = 14, scale = 2, nullable = false)
     private BigDecimal saldoFinal;
 
+    // ======== SEGUROS Y GASTOS ========
+
     @Column(name = "seguro_desgravamen", precision = 14, scale = 2)
     private BigDecimal seguroDesgravamen;
 
@@ -60,6 +64,21 @@ public class Cuota {
     @Column(name = "gastos_adm", precision = 14, scale = 2)
     private BigDecimal gastosAdm;
 
+    // ======== TASAS ========
+
+    @Column(name = "tasa_efectiva_anual", precision = 12, scale = 8)
+    private BigDecimal tasaEfectivaAnual;
+
+    @Column(name = "tasa_efectiva_periodo", precision = 12, scale = 8)
+    private BigDecimal tasaEfectivaPeriodo;
+
+    // ======== FLUJO DE CAJA (para TIR/VAN/TCEA) ========
+
+    @Column(name = "flujo_caja", precision = 14, scale = 2)
+    private BigDecimal flujoCaja;
+
+    // ======== ESTADO Y TIPO ========
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cuota", nullable = false)
     private TipoCuota tipoCuota;
@@ -67,6 +86,8 @@ public class Cuota {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_cuotas", nullable = false)
     private EstadoCuota estadoCuotas;
+
+    // ======== CONSTRUCTOR COMPLETO ========
 
     public Cuota(Credito credito,
                  Integer periodo,
@@ -80,6 +101,9 @@ public class Cuota {
                  BigDecimal seguroInmueble,
                  BigDecimal comision,
                  BigDecimal gastosAdm,
+                 BigDecimal tasaEfectivaAnual,
+                 BigDecimal tasaEfectivaPeriodo,
+                 BigDecimal flujoCaja,
                  TipoCuota tipoCuota,
                  EstadoCuota estadoCuotas) {
 
@@ -95,7 +119,11 @@ public class Cuota {
         this.seguroInmueble = seguroInmueble;
         this.comision = comision;
         this.gastosAdm = gastosAdm;
+        this.tasaEfectivaAnual = tasaEfectivaAnual;
+        this.tasaEfectivaPeriodo = tasaEfectivaPeriodo;
+        this.flujoCaja = flujoCaja;
         this.tipoCuota = tipoCuota;
         this.estadoCuotas = estadoCuotas;
     }
+
 }
